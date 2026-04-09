@@ -9,5 +9,13 @@
             "entrypoint": "backend",
             "routePrefix": "/_/backend"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/api/:path*",
+            "destination": "/_/backend/:path*"
+        }
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
 }
