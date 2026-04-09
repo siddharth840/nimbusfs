@@ -30,6 +30,8 @@ app = FastAPI(title="NimbusFS API")
 class Token(BaseModel):
     access_token: str
     token_type: str
+    class Config:
+        from_attributes = True
 
 class UserCreate(BaseModel):
     username: str
@@ -39,6 +41,8 @@ class UserCreate(BaseModel):
 class UserOut(BaseModel):
     username: str
     role: str
+    class Config:
+        from_attributes = True
 
 class ShareRequest(BaseModel):
     expiry_hours: int = 24
@@ -152,6 +156,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     new_user = database.User(username=user.username, password_hash=hashed_password, role=user.role)
     db.add(new_user)
     db.commit()
+    db.refresh(new_user)
     return new_user
 
 @app.post("/login")
