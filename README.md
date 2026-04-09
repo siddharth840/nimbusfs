@@ -1,92 +1,201 @@
-# NimbusFS - Distributed File Storage
+# 🚀 Distributed File Storage System (DFS)
 
-NimbusFS is a modern, distributed file storage system designed for scale, reliability, and speed. It automatically distributes files across multiple storage nodes using chunk-based distribution, ensuring high availability and redundancy.
+A **full-stack Distributed File Storage System** that simulates real-world cloud storage like Google Drive, Amazon S3, and HDFS.
 
-![NimbusFS Dashboard](https://github.com/siddharth840/nimbusfs/raw/main/public/placeholder.svg)
-
-## 🚀 Key Features
-
-- **Automatic Chunking**: Large files are split into optimally-sized chunks for efficient storage and retrieval.
-- **Multi-Node Distribution**: Chunks are distributed across multiple storage nodes to prevent data loss.
-- **Data Redundancy**: Configurable replication factors to ensure 99.99% uptime.
-- **Real-time Monitoring**: Intuitive dashboard to monitor node health, storage metrics, and file distribution.
-- **Secure Access**: Integrated authentication and granular access controls.
-- **API First**: Fully documented REST API for seamless integration with other services.
-
-## 🛠️ Technology Stack
-
-- **Frontend**: Next.js 15+, Tailwind CSS, Shadcn UI
-- **Backend**: Next.js API Routes (Serverless)
-- **Database**: Prisma with SQLite/PostgreSQL
-- **Authentication**: Firebase Auth
-- **Storage**: Firebase Storage (for initial chunks) / Custom Node Logic
-
-## 📦 Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or pnpm
-- Firebase Project (for Auth & Storage)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/siddharth840/nimbusfs.git
-   cd nimbusfs
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Set up environment variables:
-   ```bash
-   cp .env.example .env.local
-   # Fill in your Firebase and Database credentials
-   ```
-
-4. Initialize the database:
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
-
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## 📐 Architecture Overview
-
-NimbusFS operates on a **Master-Node** architecture:
-
-1. **Client**: Uploads files through the Web UI or API.
-2. **Master (Next.js API)**: 
-   - Receives the file.
-   - Splits it into chunks.
-   - Assigns chunks to different storage nodes.
-   - Stores metadata in the Database.
-3. **Storage Nodes**: Store the actual data chunks.
-4. **Replication**: Background processes ensure that every chunk is replicated according to the system policy.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+This project demonstrates how files can be **split, distributed, replicated, and reconstructed** across multiple nodes with cloud storage integration.
 
 ---
-Built with ❤️ by [Siddharth](https://github.com/siddharth840)
+
+## 📌 Features
+
+* 📂 File Upload & Download
+* ✂️ File Chunking (1MB chunks)
+* 🌐 Distributed Storage (multiple nodes)
+* 🔁 Replication (fault tolerance)
+* ☁️ Firebase Storage integration
+* 🗄️ MongoDB Atlas metadata management
+* ⚡ Node health monitoring
+* 🔐 Authentication (JWT-based) *(optional)*
+
+---
+
+## 🧠 System Architecture
+
+* **Client (Frontend)** → Upload/Download files
+* **Master Server** → Manages metadata & distribution
+* **Storage Nodes** → Handle chunk storage
+* **Firebase Storage** → Stores actual file chunks
+* **MongoDB Atlas** → Stores file metadata
+
+---
+
+## 🏗️ Tech Stack
+
+### 🔹 Frontend
+
+* React (Vite)
+* Tailwind CSS
+* Axios
+
+### 🔹 Backend
+
+* Node.js + Express
+* Multer (file upload)
+* Firebase Admin SDK
+* Mongoose (MongoDB)
+
+### 🔹 Cloud Services
+
+* Firebase Storage
+* MongoDB Atlas
+* Render (backend hosting)
+* Vercel (frontend hosting)
+
+---
+
+## 📁 Project Structure
+
+```bash
+dfs-project/
+│
+├── frontend/
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   └── server.js
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 🔹 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/dfs-project.git
+cd dfs-project
+```
+
+---
+
+### 🔹 2. Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_uri
+FIREBASE_BUCKET=your-project.appspot.com
+FIREBASE_KEY=your_firebase_json
+NODES=https://node1.onrender.com,https://node2.onrender.com
+ROLE=master
+```
+
+Run backend:
+
+```bash
+npm start
+```
+
+---
+
+### 🔹 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🚀 Deployment
+
+### 🔹 Backend
+
+Deploy on **Render**:
+
+* Create multiple services:
+
+  * Master
+  * Node1
+  * Node2
+
+### 🔹 Frontend
+
+Deploy on **Vercel**
+
+---
+
+## 🔄 Workflow
+
+### 📤 Upload Flow
+
+1. File uploaded from frontend
+2. Backend splits into chunks
+3. Chunks distributed across nodes
+4. Stored in Firebase
+5. Metadata saved in MongoDB
+
+---
+
+### 📥 Download Flow
+
+1. Fetch metadata
+2. Retrieve chunks from Firebase
+3. Merge chunks
+4. Return final file
+
+---
+
+## 🧪 API Endpoints
+
+| Method | Endpoint      | Description   |
+| ------ | ------------- | ------------- |
+| POST   | /upload       | Upload file   |
+| GET    | /files        | Get all files |
+| GET    | /download/:id | Download file |
+| GET    | /health       | Node status   |
+
+---
+
+## 🛡️ Future Improvements
+
+* Advanced load balancing
+* File versioning
+* Encryption (AES)
+* Real-time monitoring dashboard
+* Kubernetes deployment
+
+---
+
+## 🎓 Academic Relevance
+
+This project demonstrates key concepts of:
+
+* Distributed Systems
+* Cloud Computing
+* Fault Tolerance
+* Data Replication
+* Scalability
+
+---
+
+## 💀 Author
+
+**Siddharth Kapoor**
+
+---
+
+## ⭐ Give a Star
+
+If you found this project useful, consider giving it a ⭐ on GitHub!
