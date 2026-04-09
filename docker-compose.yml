@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # Main API Backend
+  # Main API Backend (Node.js)
   backend:
     build: ./backend
     ports:
@@ -9,7 +9,6 @@ services:
     volumes:
       - ./backend/nimbusfs.db:/app/nimbusfs.db
     environment:
-      - PYTHONUNBUFFERED=1
       - NODE1_URL=http://node1:8001
       - NODE2_URL=http://node2:8002
       - NODE3_URL=http://node3:8003
@@ -17,7 +16,7 @@ services:
       - node1
       - node2
       - node3
-    command: ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8005"]
+    command: ["npm", "start"]
 
   # Storage Node 1
   node1:
@@ -26,7 +25,9 @@ services:
       - "8001:8001"
     volumes:
       - ./backend/storage/node1:/app/storage/node1
-    command: ["python", "node_server.py", "--node", "node1", "--port", "8001"]
+    environment:
+      - NODE_NAME=node1
+    command: ["npm", "run", "node", "--", "8001", "node1"]
 
   # Storage Node 2
   node2:
@@ -35,7 +36,9 @@ services:
       - "8002:8002"
     volumes:
       - ./backend/storage/node2:/app/storage/node2
-    command: ["python", "node_server.py", "--node", "node2", "--port", "8002"]
+    environment:
+      - NODE_NAME=node2
+    command: ["npm", "run", "node", "--", "8002", "node2"]
 
   # Storage Node 3
   node3:
@@ -44,7 +47,9 @@ services:
       - "8003:8003"
     volumes:
       - ./backend/storage/node3:/app/storage/node3
-    command: ["python", "node_server.py", "--node", "node3", "--port", "8003"]
+    environment:
+      - NODE_NAME=node3
+    command: ["npm", "run", "node", "--", "8003", "node3"]
 
   # React Frontend (Nginx)
   frontend:

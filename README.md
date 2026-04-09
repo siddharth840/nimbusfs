@@ -69,9 +69,20 @@ docker-compose up --build
 - `/backend`: FastAPI application, database logic, and file storage simulation.
 - `/frontend`: React dashboard application.
 - `/docker-compose.yml`: Container orchestration for easy deployment.
+- `DESIGN_DOC.md`: Detailed system architecture and protocol documentation.
 - `run.bat`: One-click launcher for Windows environments.
 
-## 🛡️ Verification
+## 🛡️ Verification & Demonstration
+
+### Design Document
+For a deep dive into the system architecture, application-layer protocols, and concurrency control mechanisms, see [DESIGN_DOC.md](DESIGN_DOC.md).
+
+### Automated Demonstration
+You can run an automated demonstration of the system's replication and locking capabilities:
+1. Ensure the backend and nodes are running.
+2. Run: `python backend/demo_system.py`
+
+### Integrity Checks
 Each component features a `verify.py` script to ensure data integrity and system consistency. Check the dashboard logs for real-time validation status.
 
 ---

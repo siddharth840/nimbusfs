@@ -1,20 +1,20 @@
-# Dockerfile for NimbusFS Backend
-FROM python:3.10-slim
+FROM node:20-slim
 
 WORKDIR /app
 
 # Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY package.json package-lock.json ./
+RUN npm install
 
-# Copy backend code
+# Copy source
 COPY . .
 
-# Create storage base directory
-RUN mkdir -p storage
+# Initialize Prisma
+RUN npx prisma generate
 
-# Default port
-EXPOSE 8005
+# Final build
+RUN npm run build
 
-# Start server (can be overridden by command in Railway/Docker-compose)
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8005"]
+EXPOSE 8005 8001 8002 8003
+
+CMD ["npm", "start"]
