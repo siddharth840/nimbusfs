@@ -2,7 +2,7 @@ import requests
 import os
 import time
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:8005"
 
 def test_flow():
     print("--- Starting NimbusFS Backend Verification ---")
@@ -38,7 +38,7 @@ def test_flow():
     # Try to find the storage directory relative to this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     possible_storage_paths = [
-        os.path.join(script_dir, "backend", "storage"),
+        os.path.join(script_dir, "api", "storage"),
         os.path.join(script_dir, "storage"),
     ]
     

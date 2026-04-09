@@ -19,16 +19,16 @@ cd /d "%~dp0"
 
 REM --- Start Storage Nodes ---
 echo  [1/3] Starting Storage Nodes (Ports 8001-8003)...
-start "NimbusFS Node 1" cmd /k "cd /d %~dp0backend && python node_server.py --node node1 --port 8001"
-start "NimbusFS Node 2" cmd /k "cd /d %~dp0backend && python node_server.py --node node2 --port 8002"
-start "NimbusFS Node 3" cmd /k "cd /d %~dp0backend && python node_server.py --node node3 --port 8003"
+start "NimbusFS Node 1" cmd /k "cd /d %~dp0api && python node_server.py --node node1 --port 8001"
+start "NimbusFS Node 2" cmd /k "cd /d %~dp0api && python node_server.py --node node2 --port 8002"
+start "NimbusFS Node 3" cmd /k "cd /d %~dp0api && python node_server.py --node node3 --port 8003"
 
 REM Short delay for nodes to start
 timeout /t 2 /nobreak >nul
 
 REM --- Start Backend ---
 echo  [2/3] Starting Main Backend (FastAPI on port 8000)...
-start "NimbusFS Main Backend" cmd /k "cd /d %~dp0backend && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8005"
+start "NimbusFS Main Backend" cmd /k "cd /d %~dp0api && python -m uvicorn main:app --reload --host 0.0.0.0 --port 8005"
 
 REM Short delay to let backend spin up first
 timeout /t 3 /nobreak >nul
