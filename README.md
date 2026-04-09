@@ -198,4 +198,8 @@ This project demonstrates key concepts of:
 
 ## ⭐ Give a Star
 
+<<<<<<< HEAD
 If you found this project useful, consider giving it a ⭐ on GitHub!
+=======
+If you found this project useful, consider giving it a ⭐ on GitHub!
+>>>>>>> 0b4a5e4370132a2c4dbb5fbf00a91ac4a92d63cd
